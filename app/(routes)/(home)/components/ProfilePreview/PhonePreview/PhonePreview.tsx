@@ -30,7 +30,7 @@ export function PhonePreview() {
               className="rounded-full object-cover aspect-square"
             />
 
-            <p className="font-semibold text-sm mt-2 text-blue-600">
+            <p className="font-semibold text-sm mt-2 text-cyan-900">
               @{user?.username}
             </p>
             {user?.bio && (
@@ -39,7 +39,7 @@ export function PhonePreview() {
               </div>
             )}
 
-            <div className="min-h-[70%]">
+            <div className="min-h-[70%] w-full">
                 <ListSocialNetworks />
             </div>
             <div>

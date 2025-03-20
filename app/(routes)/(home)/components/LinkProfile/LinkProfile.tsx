@@ -36,16 +36,21 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useUserInfo } from "@/hooks/useUser";
 import { useState, useEffect } from "react";
 
 export function LinkProfile() {
   const [isCopiedLink, setIsCopiedLink] = useState(false);
+  const { user } = useUserInfo();
   const [fullUrl, setFullUrl] = useState("");
 
   useEffect(() => {
-    // Esto solo se ejecuta en el cliente después de la hidratación
-    setFullUrl(`${window.location.origin}/@edudevtest`);
-  }, []);
+    if (user) {
+      setFullUrl(`${window.location.origin}/${user.username}`);
+    }
+  }, [user]);
+
+  if (!user) return null;
 
   const copyLink = () => {
     if (fullUrl) {
@@ -59,14 +64,14 @@ export function LinkProfile() {
       <div className="flex flex-col justify-center text-center py-4 px-4 items-center gap-2 md:flex-row md:justify-between md:text-left">
         <span className="text-sm">
           <span>🔥 Your EduTreeClone is live: </span>
-          {fullUrl || ""} {/* Mostramos la URL solo cuando está disponible */}
+          {fullUrl}
         </span>
 
         <Button
           variant="outline"
           className="rounded-full px-4 bg-white font-semibold text-xs md:text-[16px]"
           onClick={copyLink}
-          disabled={!fullUrl} // Deshabilitar el botón hasta que tengamos la URL
+          disabled={!fullUrl}
         >
           {isCopiedLink ? "Copied" : "Copy your EduTree URL"}
         </Button>
